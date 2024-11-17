@@ -9,6 +9,7 @@ import LoginPage from "./pages/login";
 import ForgotPassword from "./pages/forgotPassword";
 import AcademicPage from "./Modules/Academic/index";
 import ValidateAuth from "./helper/validateauth";
+import InactivityHandler from "./helper/inactivityhandler"; // Import the inactivity handler
 
 export default function App() {
   const location = useLocation();
@@ -20,8 +21,15 @@ export default function App() {
         autoClose={2000}
         limit={1}
       />
+
       {location.pathname !== "/accounts/login" &&
-        location.pathname !== "/reset-password" && <ValidateAuth />}
+        location.pathname !== "/reset-password" && (
+          <>
+            <ValidateAuth />
+            <InactivityHandler /> {/* Add the inactivity handler */}
+          </>
+        )}
+
       <Routes>
         <Route path="/" element={<Navigate to="/accounts/login" replace />} />
         <Route
